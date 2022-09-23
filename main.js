@@ -4,8 +4,32 @@ const FULL_HEART = '♥'
 
 // Your JavaScript code goes here!
 
+function liker(event) {
+  const heart = event.target;
+    mimicServerCall()
+    .then(function (success) {
+      alert(success)
+      if(heart.innerText === EMPTY_HEART) { 
+      heart.innerText = FULL_HEART
+      heart.className = "activated-heart"
+      } else { 
+      heart.innerText = EMPTY_HEART
+      heart.className = ""
+      }
+    })
+    .catch(function(error) {
+      const hidden = document.getElementById("modal")
+      hidden.className = ""
+      hidden.innerText = "Random server error. Try again.";
+      setTimeout(() => hidden.className = "hidden", 3000);
+    })
+}
 
 
+const allOfTheHearts = document.querySelectorAll(".like-glyph")
+for (const heart of allOfTheHearts) {
+   heart.addEventListener("click", liker);
+}
 
 //------------------------------------------------------------------------------
 // Don't change the code below: this function mocks the server response
